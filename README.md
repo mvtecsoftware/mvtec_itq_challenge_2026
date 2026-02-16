@@ -253,25 +253,6 @@ Code running on a laptop → use Socket.
   </a>
 
 
-
-* __How to use the HDevelop remote debugging functionality:__ 
-
-  It is possible to run the HALCON scripts in interactive mode on the robot as well but this approach has a number of limitations.
-
-  Start hrun with the ```--debug``` option, indicate a port to open and the procedure to debug. Example:
-   ```sh
-  hrun RobotDemo.hdev --debug 8081 -t robot_main
-   ```
-  
-  hrun will wait for HDevelop to connect to it before it executes the script.
-  Click 'Execute' -> 'Attach to Process' in HDevelops menu and provide IP address and port there.
-
-    <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
-    <img src="images/remote_debugging.png" alt="Logo" width="480" height="400">
-  </a>
-
-
-
 <!-- LICENSE -->
 ## <a name="license"></a> License
 
