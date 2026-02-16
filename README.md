@@ -16,7 +16,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
+  <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
     <img src="images/logo.png" alt="Logo" width="200" height="80">
   </a>
 
@@ -63,7 +63,7 @@ As a starting point for this challenge, we have prepared a simple mobile robotic
 It consists of a robot chassis with two chain drives, powered by 12V motors. The motor controller is managed by an Arduino. The Arduino allows for the connection of additional hardware. The Arduino itself is controlled via a serial port connection by the machine vision software running on an Nvidia Jetson Orin Nano. The machine vision software connects to the camera, analyzes the image content, and decides what to do next. It then sends simple commands to the Arduino to move the platform.
 
 ### <a name="electrical"></a> Electrical Diagram
-  <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
+  <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
     <img src="images/electrical.png" alt="Logo" width="400" height="225">
   </a>
 
@@ -197,7 +197,7 @@ The Jetson Orin Nano can be accessed via network either via an ethernet cable or
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/mvtecsoftware/mvtec_itq_challenge_2025.git
+   git clone https://github.com/mvtecsoftware/mvtec_itq_challenge_2026.git
    ```
 2. Copy the scripts to the Robot (Not strictly needed, an old version should already be there)
    ```sh
@@ -241,14 +241,14 @@ Code running on a laptop → use Socket.
 
   Use the windows tool 'Remote Desktop Connection'
 
-    <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
+    <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
       <img src="images/rdp.png" alt="Logo" width="400" height="260">
     </a>
 
   You have to enter username and password multiple times.
   It is a good idea to choose a smaller resolution for the rdp connection to get a better update rate of the gui.
 
-  <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
+  <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
     <img src="images/rdp2.png" alt="Logo" width="400" height="500">
   </a>
 
@@ -266,7 +266,7 @@ Code running on a laptop → use Socket.
   hrun will wait for HDevelop to connect to it before it executes the script.
   Click 'Execute' -> 'Attach to Process' in HDevelops menu and provide IP address and port there.
 
-    <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
+    <a href="https://github.com/mvtecsoftware/mvtec_itq_challenge_2026">
     <img src="images/remote_debugging.png" alt="Logo" width="480" height="400">
   </a>
 
@@ -287,7 +287,7 @@ Lukas Ranftl - lukas.ranftl@mvtec.com
 
 Philipp Junge - philipp.junge@mvtec.com
 
-Project Link: [https://github.com/mvtecsoftware/mvtec_itq_challenge_2025](https://github.com/mvtecsoftware/mvtec_itq_challenge_2025)
+Project Link: [https://github.com/mvtecsoftware/mvtec_itq_challenge_2026](https://github.com/mvtecsoftware/mvtec_itq_challenge_2026)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
