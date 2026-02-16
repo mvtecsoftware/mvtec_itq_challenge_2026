@@ -2,8 +2,10 @@
 #include <Servo.h>
 
 // At the moment not actually attached to the robot
-Servo servo_1;  // create servo object to control a servo
-Servo servo_2;  // create servo object to control a servo
+Servo servo_1;  
+Servo servo_2;  
+Servo servo_3;  
+Servo servo_4;  
 
 // Buffer for receiving serial port messages
 #define BUFFER_SIZE 10
@@ -113,8 +115,17 @@ void analyze_command()
     }
     else if (strncmp(&in_buffer[1],"S1=",3)==0)
     {
-      // servo 1
+      // Servo 1
       val=atoi(&in_buffer[4]);
+      // Limiting the range of the servo, dont trust the high level input
+      if(val<110)
+      {
+        val=110;
+      }
+      if(val>170)
+      {
+        val=170;
+      }
       servo_1.write(val);
       confirm_command();
     }
@@ -122,7 +133,21 @@ void analyze_command()
     {
       // servo 2
       val=atoi(&in_buffer[4]);
-      servo_1.write(val);
+      servo_2.write(val);
+      confirm_command();
+    }
+    else if (strncmp(&in_buffer[1],"S3=",3)==0)
+    {
+      // servo 3
+      val=atoi(&in_buffer[4]);
+      servo_3.write(val);
+      confirm_command();
+    }
+    else if (strncmp(&in_buffer[1],"S4=",3)==0)
+    {
+      // servo 4
+      val=atoi(&in_buffer[4]);
+      servo_4.write(val);
       confirm_command();
     }
     else if (strncmp(&in_buffer[1],"WD=",3)==0)
@@ -141,8 +166,7 @@ void setup() {
   // initialize both serial ports:
   Serial.begin(9600);
   Serial1.begin(9600);
-  servo_1.attach(8);
-  servo_2.attach(9);
+  
   pinMode(2, OUTPUT); 
   pinMode(3, OUTPUT); 
   pinMode(4, OUTPUT); 
@@ -150,6 +174,17 @@ void setup() {
   pinMode(6, OUTPUT); 
   pinMode(7, OUTPUT); 
 
+  pinMode(8, OUTPUT); 
+  pinMode(9, OUTPUT); 
+  pinMode(10, OUTPUT); 
+  pinMode(11, OUTPUT); 
+
+  servo_1.write(110); // Initialize in "Schaufle oben" position
+  servo_1.attach(8);
+  servo_2.attach(9);
+  servo_3.attach(10);
+  servo_4.attach(11);
+  
   for(int i=0;i<BUFFER_SIZE;i++)
   {
     in_buffer[i]='\0';

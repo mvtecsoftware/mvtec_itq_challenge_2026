@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="24.11.1.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image, 'Fotolia_45332982_S.jpg')</l>
+<l>process_apples (Image, RegionClosing, Area, Row, Column)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="process_apples">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="RegionClosing" base_type="iconic" dimension="0"/>
+</oo>
+<oc>
+<par name="Area" base_type="ctrl" dimension="0"/>
+<par name="Row" base_type="ctrl" dimension="0"/>
+<par name="Column" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l># Get RGB image channels.</l>
+<l>image_to_channels (Image, Images)</l>
+<l>decompose3 (Image, Image1, Image2, Image3)</l>
+<c></c>
+<l># Blob analysis on red and green channel.</l>
+<l>threshold (Image1, Region1, 100, 255)</l>
+<l>threshold (Image2, Region2, 0, 50)</l>
+<l>intersection (Region1, Region2, RegionIntersection)</l>
+<c></c>
+<l># Seperate regions, ignore small ones, close regions.</l>
+<l>connection (RegionIntersection, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 1200, 99999)</l>
+<l>closing (SelectedRegions, SelectedRegions, RegionClosing)</l>
+<c></c>
+<l># Get apple positions and areas</l>
+<l>area_center (RegionClosing, Area, Row, Column)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="process_apples">
+<parameters>
+<parameter id="Area"/>
+<parameter id="Column"/>
+<parameter id="Image"/>
+<parameter id="RegionClosing"/>
+<parameter id="Row"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

@@ -1,0 +1,16 @@
+# Windows-Systemdateien
+Thumbs.db
+Desktop.ini
+
+# Mac-Systemdateien
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Logs
+*.log

@@ -50,13 +50,9 @@
 <!-- ABOUT THE PROJECT -->
 ## <a name="about"></a> About The Project
 
-  <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
-    <img src="images/ppt.png" alt="Logo" width="800" height="450">
-  </a>
-
 Use computer vision and mobile robotics to clean our planet!
 
-How can technology shape the future of waste management? Develop creative solutions for the automated detection and collection of waste - with a mobile platform, cameras and deep learning. Bring your expertise in the fields of software, hardware and electronics to the subtasks of robot control, navigation, image recognition and waste collection.
+How can technology shape the future of waste management? Develop creative solutions for the automated detection and collection of waste - with a mobile platform, cameras and deep learning. Bring your expertise in the fields of software and hardware to the subtasks of robot control, navigation, image recognition and waste collection.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -68,7 +64,7 @@ It consists of a robot chassis with two chain drives, powered by 12V motors. The
 
 ### <a name="electrical"></a> Electrical Diagram
   <a href="https://github.com/christian-hartinger/itq_2025_mvtec_challenge">
-    <img src="images/electrical.png" alt="Logo" width="800" height="450">
+    <img src="images/electrical.png" alt="Logo" width="400" height="225">
   </a>
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -97,6 +93,8 @@ This happens with the line
 The script can then send commands to the arduino in a very basic format which looks like ```:<Command>=<Value>!```.
 As an example if the program sends ```:ML=120!``` it means set the power value of the left motor to 120.
 What 120 exactly means is implemented in the Arduino program.
+
+This is of course also possible to do with Python for instance, as demonstrated in the according scripts in 'robot_python'.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,22 +137,58 @@ The Jetson Orin Nano can be accessed via network either via an ethernet cable or
   
   Contains the Arduino Program. Has to be opened with the Arduino IDE.
 
-* __halcon/HelloWorld.hdev__: 
+* __robot_halcon/HelloWorld.hdev__: 
 
   Prints 'Hello World' to the commandline. Test it with ```hrun HelloWorld.hdev```.
 
-* __halcon/RobotDemo.hdev__: 
+* __robot_halcon/RobotDemo.hdev__: 
 
   Acquires one image from the camera to test that it works. Spins the left and right robot chain drive forwards and backwards for one second to test if it works. Test it on the robots Jetson Orin with ```hrun RobotDemo.hdev```.
 
-* __halcon/RobotDemoMouseControl.hdev__: 
+* __robot_halcon/RobotDemoMouseControl.hdev__: 
 
   Allows to drive the robot around with the mouse while looking at the cameras live images. Requires access to the Linux GUI. Test it on the robots Jetson Orin with ```hrun RobotDemoMouseControl.hdev```.
 
-* __halcon/robot_functions.hdpl__: 
+* __robot_halcon/robot_functions.hdpl__: 
 
   A collection of HALCON procedures. They are used in RobotDemo.hdev and RobotDemoMouseControl.hdev.
   They can be used in the main .hdev file with the line ```include .```.
+
+* __robot_python/robot_api_serial.py:__:
+
+  Python API for direct serial communication with the Arduino (/dev/ttyUSB0).
+  Handles motor control, servo control and automatic watchdog updates.
+  Works only when executed directly on the robot (requires serial access).
+
+* __robot_python/demo_serial.py:__:
+
+  Simple example script using robot_api_serial.py. Drives forward, stops, turns and moves a servo.
+  Run on the robot with ```python3 demo_serial.py```.
+
+* __robot_python/robot_api_socket.py:__:
+
+  TCP socket server that runs on the robot. Bridges network commands to the Arduino via serial.
+  Must be started on the robot with ```python3 robot_api_socket.py``` and keeps running while waiting for client connections.
+
+* __robot_python/robot_api_socket_client.py:__:
+
+  Client-side API for controlling the robot via TCP. Can be executed either on the robot or on a student laptop (if connected to the same network).
+
+* __robot_python/demo_socket.py:__:
+
+  Example client script using robot_api_socket_client.py. Demonstrates basic driving and servo control over the network.
+
+* __robot_python/demo_socket_keyboard_control.py:__:
+
+  Keyboard control example using the socket API. Allows interactive driving over the network.
+
+* __hdevengine/python_hdevengine_example.hdev:__:
+
+  HALCON procedure file used by the Python example below. Contains a procedure that can be executed from Python via HDevEngine.
+
+* __hdevengine/python_hdevengine_example.py:__:
+
+  Python example showing how to execute HALCON code using HDevEngine. Calls the procedure from python_hdevengine_example.hdev and prints the results.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -165,9 +199,9 @@ The Jetson Orin Nano can be accessed via network either via an ethernet cable or
    ```sh
    git clone https://github.com/mvtecsoftware/mvtec_itq_challenge_2025.git
    ```
-2. Copy the HALCON scripts to the Robot (Not strictly needed, an old version should already be there)
+2. Copy the scripts to the Robot (Not strictly needed, an old version should already be there)
    ```sh
-   scp halcon/* makeathon@192.168.178.22:BeachBotty
+   scp -r robot_halcon makeathon@192.168.178.22:BeachBotty
    ```
 3. Connect to the Robot via ssh
    ```sh
@@ -177,13 +211,17 @@ The Jetson Orin Nano can be accessed via network either via an ethernet cable or
    ```sh
    hrun RobotDemo.hdev
    ```
-5. Develop and improve the robots software with HDevelop and the low-level hardware control layer with the Arduino IDE.
+5. Develop and improve the robots software with HDevelop and Python.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## <a name="tipps"></a> Tips And Tricks
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+* __Serial vs Socket:__
+Code running on the robot → use Serial.
+Code running on a laptop → use Socket.
 
 * __How to connect to the robot via SSH:__ 
   
@@ -196,10 +234,6 @@ The Jetson Orin Nano can be accessed via network either via an ethernet cable or
 
    ```sh
    scp <what> <user>@<target_machine>:<target_path>
-   ```
-   Example:
-   ```sh
-   scp halcon/* makeathon@192.168.178.22:BeachBotty
    ```
    and enter the password 'makeathon'
 
@@ -249,11 +283,9 @@ Distributed under the MIT license. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## <a name="contact"></a> Contact
 
-Coco Rogers - coco.rogers@mvtec.com
+Lukas Ranftl - lukas.ranftl@mvtec.com
 
 Philipp Junge - philipp.junge@mvtec.com
-
-Christian Hartinger - christian.hartinger@mvtec.com
 
 Project Link: [https://github.com/mvtecsoftware/mvtec_itq_challenge_2025](https://github.com/mvtecsoftware/mvtec_itq_challenge_2025)
 
